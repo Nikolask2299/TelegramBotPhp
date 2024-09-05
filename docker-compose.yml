@@ -1,19 +1,44 @@
-version: '3'
 
 networks:
   internal:
+    driver: bridge
 
 services:
   nginx:
-    image: nginx:stable-alpine
+    image: nginx:alpine
     container_name: nginx-telegram-server
-
-    ports:
-      - 80:80
-
     
+    ports:
+      - "80:80"
+
+    volumes:
+      - ./telegrambot:/var/www/php
+      - ./config/nginx:/etc/nginx/conf.d
+      - ./data/logs:/var/logs/nginx
+
+    depends_on:
+      - php
+
+    networks:
+      - internal
+
+
+  php:
+    build:
+      context: ./config/php
+      dockerfile: Dockerfile
+
+    container_name: php-telegram-server
+
+    volumes:
+      - ./telegrambot:/var/www/php
+
+    networks:
+      - internal
+
+
   postgresql:
-    image: postgres:15-alpine
+    image: postgres:16.4-alpine
     restart: unless-stopped
     shm_size: 256mb
 
@@ -24,27 +49,22 @@ services:
       POSTGRES_PASSWORD: q1w2e3r4t5y6u7i8o9p0
    
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - ./data/postgres:/var/lib/postgresql/data
 
+    networks:
+      - internal
 
 
   pgadmin:
-    image: dpage/pgadmin4:stable-alpine
+    image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
       PGADMIN_DEFAULT_PASSWORD: q1w2e3r4t5y6u7i8o9p0
-    
-    ports:
-      - 90:90
       
+          
     depends_on:
       - postgresql
 
-    volumes:
-      - pgadmin:/var/lib/pgadmin
+    networks:
+      - internal
 
-
-volumes:
-  postgres:
-  pgadmin:
-  nginx:
