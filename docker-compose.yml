@@ -9,7 +9,7 @@ services:
     container_name: nginx-telegram-server
     
     ports:
-      - "80:80"
+      - "8080:80"
 
     volumes:
       - ./telegrambot:/var/www/php
@@ -29,6 +29,9 @@ services:
       dockerfile: Dockerfile
 
     container_name: php-telegram-server
+
+    ports:
+      - "8070:70"
 
     volumes:
       - ./telegrambot:/var/www/php

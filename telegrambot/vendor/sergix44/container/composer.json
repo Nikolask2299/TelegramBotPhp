@@ -1,0 +1,42 @@
+{
+  "name": "sergix44/container",
+  "description": "A simple and fast service container",
+  "type": "library",
+  "require": {
+    "php": "^8.1",
+    "psr/container": "^1.1|^2.0",
+    "ext-reflection": "*"
+  },
+  "require-dev": {
+    "pestphp/pest": "^2.0",
+    "php-di/php-di": "^7.0",
+    "vimeo/psalm": "^5.13"
+  },
+  "provide": {
+    "psr/container-implementation": "^1.1|^2.0"
+  },
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "SergiX44\\Container\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SergiX44\\Container\\Tests\\": "tests/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Sergio Brighenti",
+      "email": "sergio@brighenti.me"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
+}
