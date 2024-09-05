@@ -1,0 +1,50 @@
+version: '3'
+
+networks:
+  internal:
+
+services:
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx-telegram-server
+
+    ports:
+      - 80:80
+
+    
+  postgresql:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    shm_size: 256mb
+
+    container_name: postgresql-telegram-server
+
+    environment:
+      POSTGRES_USER: postgres_admin
+      POSTGRES_PASSWORD: q1w2e3r4t5y6u7i8o9p0
+   
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+
+
+  pgadmin:
+    image: dpage/pgadmin4:stable-alpine
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
+      PGADMIN_DEFAULT_PASSWORD: q1w2e3r4t5y6u7i8o9p0
+    
+    ports:
+      - 90:90
+      
+    depends_on:
+      - postgresql
+
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+
+
+volumes:
+  postgres:
+  pgadmin:
+  nginx:
