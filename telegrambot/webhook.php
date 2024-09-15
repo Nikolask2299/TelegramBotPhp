@@ -1,6 +1,6 @@
 <?php
 define('TGKEY', '7472898032:AAG_YrQQlyWzkdC3LA6YosOAJ9kAFn399SI');
-define('WEBHOK', 'https://shj0z9-83-149-19-177.ru.tuna.am');
+define('WEBHOK', 'YOU ARE WEBHOK');
 
 include('tg.class.php');
 include('postgres_db.php');
@@ -21,9 +21,9 @@ if ($db != null) {
     exit();
 }
 
-//$tg -> deleteWebhook();
-//$tg->setWebhook(WEBHOK);
-//$tg -> getWebhookinfo();
+$tg -> deleteWebhook();
+$tg->setWebhook(WEBHOK);
+$tg -> getWebhookinfo();
 
 $body = file_get_contents('php://input');
 $data = json_decode($body, true);
