@@ -9,7 +9,7 @@ services:
     container_name: nginx-telegram-server
     
     ports:
-      - "8080:80"
+      - "8080:8080"
 
     volumes:
       - ./telegrambot:/var/www/php
@@ -18,6 +18,8 @@ services:
 
     depends_on:
       - php
+
+   
 
     networks:
       - internal
@@ -30,9 +32,6 @@ services:
 
     container_name: php-telegram-server
 
-    ports:
-      - "8070:70"
-
     volumes:
       - ./telegrambot:/var/www/php
 
@@ -41,16 +40,20 @@ services:
 
 
   postgresql:
-    image: postgres:16.4-alpine
+    image: postgres:16.4
     restart: unless-stopped
     shm_size: 256mb
 
     container_name: postgresql-telegram-server
 
     environment:
+      POSTGRES_DB: postgres
       POSTGRES_USER: postgres_admin
       POSTGRES_PASSWORD: q1w2e3r4t5y6u7i8o9p0
-   
+    
+    ports:
+      - 5432:5432
+
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
 
@@ -63,8 +66,10 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
       PGADMIN_DEFAULT_PASSWORD: q1w2e3r4t5y6u7i8o9p0
-      
-          
+      PGADMIN_LISTEN_PORT: 88
+    ports:
+      - 8090:88
+    
     depends_on:
       - postgresql
 
