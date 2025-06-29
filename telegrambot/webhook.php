@@ -1,5 +1,5 @@
 <?php
-define('TGKEY', '7472898032:AAG_YrQQlyWzkdC3LA6YosOAJ9kAFn399SI');
+define('TGKEY', '_');
 define('WEBHOK', 'YOU ARE WEBHOK');
 
 include('tg.class.php');
